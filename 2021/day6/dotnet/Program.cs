@@ -63,7 +63,6 @@ BigInteger Fishies(int days, Dictionary<int,BigInteger>fish)
         if (i == 0)
         {
             respawns = fish[0];
-            fish[0] = 0;
         }
         else
         {
