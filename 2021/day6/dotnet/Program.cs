@@ -1,12 +1,6 @@
-﻿// test input
+﻿using System.Numerics;
 
-using System.Numerics;
-
-var input = "3,4,3,1,2";
-
-// var input = await File.ReadAllTextAsync("/Users/eddsansome/code/advent_of_code/2021/day6/dotnet/input5.txt");
-
-// lets tidy this up
+var input = await File.ReadAllTextAsync("/Users/eddsansome/code/advent_of_code/2021/day6/dotnet/input5.txt");
 
 var fishies = input.Split(",")
                                     .ToList()
@@ -14,10 +8,10 @@ var fishies = input.Split(",")
                                     .ToList();
 
 
-Dictionary<int, int> FishCount(List<int> fish)
+Dictionary<int, BigInteger> FishCount(List<int> fish)
 {
 
-    var fishBurgers = new Dictionary<int, int>()
+    var fishBurgers = new Dictionary<int, BigInteger>()
     {
         {0, 0},
         {1, 0},
@@ -37,24 +31,19 @@ Dictionary<int, int> FishCount(List<int> fish)
 
 }
 
-// base case is days
-// will try recursion but might crash?
-// this is very slooooow
-// can we change this to use a hash?
-
-long Fishies(int days, Dictionary<int,int>fish)
+BigInteger Fishies(int days, Dictionary<int,BigInteger>fish)
 {
     if (days == 0)
     {
-        long total = 0;
+        var t = new BigInteger(0);
         fish.Values.ToList().ForEach(x =>
         {
-            total += Convert.ToInt64(x);
+            t = BigInteger.Add(x, t);
         });
-        return total;
+        return t;
     }
 
-    var newFish = new Dictionary<int, int>()
+    var newFish = new Dictionary<int, BigInteger>()
     {
         {0, 0},
         {1, 0},
@@ -67,7 +56,7 @@ long Fishies(int days, Dictionary<int,int>fish)
         {8, 0},
 
     };
-    var respawns = 0;
+    var respawns = new BigInteger(0);
 
     for (int i = 0; i <= 8; i++)
     {
@@ -85,11 +74,6 @@ long Fishies(int days, Dictionary<int,int>fish)
 
     newFish[6] += respawns;
     newFish[8] += respawns;
-
-    var t = new BigInteger();
-    fish.Values.ToList().ForEach(x => t += x);
-    // solution is correct, but this overflows REEEEEEE
-    Console.WriteLine(t);
 
     return Fishies(days - 1, newFish);
 }
