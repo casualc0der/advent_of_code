@@ -1,37 +1,20 @@
 ﻿// var input = "16,1,2,0,4,2,7,1,2,14";
 
+using System.Xml.Schema;
+
 var input = await File.ReadAllTextAsync("/Users/eddsansome/code/advent_of_code/2021/day7/input7.txt");
 
 var crabs = input.Split(",").ToList().Select(int.Parse).ToList();
 
-void Question1(List<int> ints)
+int Question1(List<int> ints)
 {
-    ints.Sort();
-
     var mid = ints[ints.Count() / 2];
 
-    var total = 0;
-
-    ints.ForEach(crab =>
-    {
-        if (crab < mid)
-        {
-            total += (mid - crab);
-        }
-
-        if (crab > mid)
-        {
-            total += (crab - mid);
-        }
-    });
-
-    Console.WriteLine(total);
+    return ints.Select(crab => crab < mid ? mid - crab : crab - mid).Sum();
 }
 
-void Question2(List<int> ints)
+int Question2(List<int> ints)
 {
-    ints.Sort();
-
     var first = ints.First();
     var last = ints.Last();
 
@@ -47,40 +30,32 @@ void Question2(List<int> ints)
         }
     }
 
-    Console.WriteLine(derp);
+    return derp;
 }
+
 
 int FuelBasedOnKey(List<int> crabbies, int key)
 {
-    var total = 0;
     var crabCache = new Dictionary<int, int>();
 
-    crabbies.ForEach(crab =>
+    return crabbies.Select(crab =>
+        crabCache.ContainsKey(crab) ? crabCache[crab] : CountAndCacheCrabs(crabCache, crab, key)).Sum();
+}
+
+int CountAndCacheCrabs(Dictionary<int, int> crabCache, int crab, int key)
+{
+    var total = 0;
+    var diff = crab < key ? key - crab : crab - key;
+
+    for (int i = 1; i <= diff; i++)
     {
-        if (crabCache.ContainsKey(crab))
-        {
-            total += crabCache[crab];
-        }
-        else
-        {
-            var tmp = 0;
-            var diff = crab < key ? key - crab : crab - key;
+        total += i;
+    }
 
-            for (int i = 1; i <= diff; i++)
-            {
-                tmp += i;
-            }
-
-            total += tmp;
-            crabCache.Add(crab, tmp);
-            
-        }
-
-    });
-
+    crabCache.Add(crab, total);
     return total;
 }
 
-
-Question1(crabs);
-Question2(crabs);
+crabs.Sort();
+Console.WriteLine(Question1(crabs));
+Console.WriteLine(Question2(crabs));
