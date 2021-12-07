@@ -10,50 +10,22 @@ int Question1(List<int> ints)
 {
     var mid = ints[ints.Count() / 2];
 
-    return ints.Select(crab => crab < mid ? mid - crab : crab - mid).Sum();
+    return ints.Select(crab => Math.Abs(crab - mid)).Sum();
 }
 
-int Question2(List<int> ints)
+int Question2(IReadOnlyCollection<int> ints) => Enumerable.Range(ints.First(), ints.Last())
+    .ToList()
+    .Select(crab => FuelBasedOnKey(ints, crab))
+    .Min();
+
+int FuelBasedOnKey(IEnumerable<int> crabbies, int key) =>
+    crabbies.Select(crab => CountCrabs(crab, key)).Sum();
+
+
+int CountCrabs(int crab, int key)
 {
-    var first = ints.First();
-    var last = ints.Last();
-
-    var derp = Int32.MaxValue;
-
-    for (int i = first; i <= last; i++)
-    {
-        var fuelDiff = FuelBasedOnKey(ints, i);
-
-        if (fuelDiff < derp)
-        {
-            derp = fuelDiff;
-        }
-    }
-
-    return derp;
-}
-
-
-int FuelBasedOnKey(List<int> crabbies, int key)
-{
-    var crabCache = new Dictionary<int, int>();
-
-    return crabbies.Select(crab =>
-        crabCache.ContainsKey(crab) ? crabCache[crab] : CountAndCacheCrabs(crabCache, crab, key)).Sum();
-}
-
-int CountAndCacheCrabs(Dictionary<int, int> crabCache, int crab, int key)
-{
-    var total = 0;
-    var diff = crab < key ? key - crab : crab - key;
-
-    for (int i = 1; i <= diff; i++)
-    {
-        total += i;
-    }
-
-    crabCache.Add(crab, total);
-    return total;
+    var diff = Math.Abs(crab - key);
+    return diff * (diff + 1) / 2;
 }
 
 crabs.Sort();
