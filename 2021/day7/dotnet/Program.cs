@@ -47,39 +47,35 @@ void Question2(List<int> ints)
         }
     }
 
-    ;
     Console.WriteLine(derp);
 }
 
 int FuelBasedOnKey(List<int> crabbies, int key)
 {
     var total = 0;
+    var crabCache = new Dictionary<int, int>();
 
     crabbies.ForEach(crab =>
     {
-        var tmp = 0;
-        if (crab < key)
+        if (crabCache.ContainsKey(crab))
         {
-            var diff = key - crab;
+            total += crabCache[crab];
+        }
+        else
+        {
+            var tmp = 0;
+            var diff = crab < key ? key - crab : crab - key;
+
             for (int i = 1; i <= diff; i++)
             {
                 tmp += i;
             }
 
             total += tmp;
+            crabCache.Add(crab, tmp);
+            
         }
 
-        if (crab > key)
-        {
-            var tmp1 = 0;
-            var diff = crab - key;
-            for (int i = 1; i <= diff; i++)
-            {
-                tmp1 += i;
-            }
-
-            total += tmp1;
-        }
     });
 
     return total;
