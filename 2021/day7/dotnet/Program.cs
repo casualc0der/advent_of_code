@@ -1,7 +1,5 @@
 ﻿// var input = "16,1,2,0,4,2,7,1,2,14";
 
-using System.Xml.Schema;
-
 var input = await File.ReadAllTextAsync("/Users/eddsansome/code/advent_of_code/2021/day7/input7.txt");
 
 var crabs = input.Split(",").ToList().Select(int.Parse).ToList();
