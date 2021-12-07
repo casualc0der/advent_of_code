@@ -11,10 +11,11 @@ int Question1(List<int> ints)
     return ints.Select(crab => Math.Abs(crab - mid)).Sum();
 }
 
-int Question2(IReadOnlyCollection<int> ints) => Enumerable.Range(ints.First(), ints.Last())
-    .ToList()
-    .Select(crab => FuelBasedOnKey(ints, crab))
-    .Min();
+int Question2(IReadOnlyCollection<int> ints) =>
+    Enumerable.Range(ints.First(), ints.Last())
+        .ToList()
+        .Select(crab => FuelBasedOnKey(ints, crab))
+        .Min();
 
 int FuelBasedOnKey(IEnumerable<int> crabbies, int key) =>
     crabbies.Select(crab => CountCrabs(crab, key)).Sum();
