@@ -71,6 +71,8 @@ void BFS(int[,] caves, int y, int x)
        
         var cell = queue.Peek();
 
+        Console.WriteLine(cell);
+
         int yi = cell.Item1;
         int xi = cell.Item2;
 
