@@ -23,9 +23,9 @@ func main() {
 	dots := []coord{}
 	folds := []fold{}
 
-	x := strings.Split(string(question), "\n\n")
-	f := strings.Split(x[0], "\n")
-	i := strings.Split(x[1], "\n")
+	raw := strings.Split(string(question), "\n\n")
+	f := strings.Split(raw[0], "\n")
+	i := strings.Split(raw[1], "\n")
 
 	for _, ff := range f {
 		fo := strings.Split(ff, ",")
