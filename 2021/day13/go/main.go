@@ -18,28 +18,6 @@ type fold struct {
 }
 
 func main() {
-	// sample := `6,10
-	// 0,14
-	// 9,10
-	// 0,3
-	// 10,4
-	// 4,11
-	// 6,0
-	// 6,12
-	// 4,1
-	// 0,13
-	// 10,12
-	// 3,4
-	// 3,0
-	// 8,4
-	// 1,10
-	// 2,14
-	// 8,10
-	// 9,0
-
-	// fold along y=7
-	// fold along x=5`
-
 	question, _ := os.ReadFile("input13.txt")
 
 	dots := []coord{}
@@ -62,7 +40,6 @@ func main() {
 	}
 
 	for _, ii := range i {
-
 		io := strings.Split(ii, "fold along ")
 		if len(io) > 1 {
 
@@ -73,58 +50,40 @@ func main() {
 				direction: iv[0],
 				line:      line,
 			})
-
 		}
-
 	}
 
 	for _, fold := range folds {
-
 		if fold.direction == "y" {
 			tempDots := []coord{}
-
 			for _, dot := range dots {
-
 				if dot.y > fold.line {
-
 					jo := fold.line - (dot.y - fold.line)
-
 					tempDots = append(tempDots, coord{
 						y: jo,
 						x: dot.x,
 					})
 				} else {
 					tempDots = append(tempDots, dot)
-
 				}
-
 			}
 			dots = tempDots
-
 		}
 		if fold.direction == "x" {
 			tempDots := []coord{}
-
 			for _, dot := range dots {
-
 				if dot.x > fold.line {
-
 					my := maxX(dots) - dot.x
-
 					tempDots = append(tempDots, coord{
 						y: dot.y,
 						x: my,
 					})
 				} else {
 					tempDots = append(tempDots, dot)
-
 				}
-
 			}
 			dots = tempDots
-
 		}
-
 	}
 	printDots(dots)
 
@@ -133,7 +92,6 @@ func main() {
 func maxY(dots []coord) int {
 
 	max := -1
-
 	for _, dot := range dots {
 		if dot.y > max {
 			max = dot.y
@@ -145,7 +103,6 @@ func maxY(dots []coord) int {
 func maxX(dots []coord) int {
 
 	max := -1
-
 	for _, dot := range dots {
 		if dot.x > max {
 			max = dot.x
@@ -164,19 +121,15 @@ func printDots(dots []coord) {
 	for i := 0; i <= maxY; i++ {
 		answer = append(answer, []string{})
 		for j := 0; j <= maxX; j++ {
-
 			answer[i] = append(answer[i], " ")
 		}
 	}
 
 	for _, dot := range dots {
 		answer[dot.y][dot.x] = "x"
-
 	}
 
 	for _, a := range answer {
-
 		fmt.Println(a)
-
 	}
 }
