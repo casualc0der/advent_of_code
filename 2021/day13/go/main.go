@@ -86,7 +86,6 @@ func main() {
 		}
 	}
 	printDots(dots)
-
 }
 
 func maxY(dots []coord) int {
