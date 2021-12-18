@@ -7,8 +7,6 @@ import (
 
 type nodes map[string][]string
 
-var paths = [][]string{}
-
 func main() {
 	// sample := `start-A
 	// start-b
@@ -52,16 +50,10 @@ start-zi`
 		raw := strings.Split(edge, "-")
 		if raw[0] != "start" && raw[1] != "end" {
 			caves[raw[1]] = append(caves[raw[1]], raw[0])
-
 		}
 		caves[raw[0]] = append(caves[raw[0]], raw[1])
 	}
-
 	answer := traverse(caves, []string{"start"}, "start")
-
-	for _, p := range paths {
-		fmt.Println(p)
-	}
 	fmt.Println(answer)
 }
 
@@ -70,13 +62,10 @@ func traverse(c nodes, v []string, cu string) int {
 	if cu == "end" {
 		return 1
 	}
-
 	count := 0
 
 	for _, node := range c[cu] {
-
 		vv := v
-
 		if isSmallCave(node) {
 			if visited(vv, node) {
 				continue
@@ -86,21 +75,17 @@ func traverse(c nodes, v []string, cu string) int {
 		}
 		count += traverse(c, vv, node)
 	}
-
 	return count
 }
 
 func isSmallCave(cave string) bool {
-
 	if strings.ToLower(cave) == cave {
 		return true
 	}
 	return false
-
 }
 
 func visited(v []string, node string) bool {
-
 	for _, n := range v {
 		if n == node {
 			return true
